@@ -1,0 +1,56 @@
+package com.example.ph13373;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import java.util.List;
+
+public class LopAdapter extends ArrayAdapter<Lop> {
+    private Context context;
+    private int layout;
+    private List<Lop> _lstLops;
+    private LayoutInflater inflater;
+
+
+    public LopAdapter(@NonNull Context context, int resource, List<Lop> objects) {
+        super(context, resource, objects);
+        this.context=context;
+        this.layout=resource;
+        this._lstLops=objects;
+        inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    @NonNull
+    @Override
+    public View getView(int position,  View convertView,  ViewGroup parent) {
+        viewHolder holder = new viewHolder();
+
+        if(convertView==null){
+            convertView=inflater.inflate(R.layout.item_lv_dslop,null);
+
+            holder.lbl_stt=(TextView)convertView.findViewById(R.id.lbl_stt);
+            holder.lbl_maLop=(TextView)convertView.findViewById(R.id.lbl_maLop_lv);
+            holder.lbl_tenLop=(TextView)convertView.findViewById(R.id.lbl_tenLop_lv);
+
+        }
+        else {
+            holder=(viewHolder)convertView.getTag();
+        }
+        Lop lop = _lstLops.get(position);
+        holder.lbl_stt.setText(String.valueOf(position+1));
+        holder.lbl_maLop.setText(lop.getMaLop());
+        holder.lbl_tenLop.setText(lop.getTenLop());
+        return convertView;
+    }
+
+    public class viewHolder{
+        TextView lbl_stt,lbl_maLop,lbl_tenLop;
+    }
+}
